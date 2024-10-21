@@ -1,0 +1,4 @@
+# To be executed in powershell or win prompt:
+
+>> cd /path/to/script
+>> pyinstaller main.spec --onefile

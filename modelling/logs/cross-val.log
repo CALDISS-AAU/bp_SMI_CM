@@ -1,0 +1,14 @@
+2024-09-04 11:14:06 - INFO - Starting cross-validation...
+2024-09-04 11:14:08 - INFO - Use pytorch device_name: cuda
+2024-09-04 11:14:08 - INFO - Load pretrained SentenceTransformer: intfloat/multilingual-e5-large
+2024-09-04 11:38:53 - INFO - Starting cross-validation...
+2024-09-04 11:38:55 - INFO - Use pytorch device_name: cuda
+2024-09-04 11:38:55 - INFO - Load pretrained SentenceTransformer: intfloat/multilingual-e5-large
+2024-09-04 11:52:42 - INFO - Starting cross-validation...
+2024-09-04 11:52:43 - INFO - Use pytorch device_name: cuda
+2024-09-04 11:52:43 - INFO - Load pretrained SentenceTransformer: intfloat/multilingual-e5-large
+2024-09-04 12:35:10 - INFO - Save model to checkpoints/step_10407
+2024-09-04 13:17:40 - INFO - Save model to checkpoints/step_20814
+2024-09-04 14:00:07 - INFO - Save model to checkpoints/step_31221
+2024-09-04 14:42:39 - INFO - Save model to checkpoints/step_41628
+2024-09-04 15:25:09 - INFO - Save model to checkpoints/step_52035

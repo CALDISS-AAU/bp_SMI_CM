@@ -1,0 +1,6 @@
+*.ipynb_checkpoints*
+data
+Trash*
+*__pycache__*
+setup.sh
+modelling/models/*

@@ -1,0 +1,8 @@
+2024-09-03 11:14:02 - INFO - Dictionary content: {
+    "key1": "value1",
+    "key2": "value2",
+    "key3": "value3"
+}
+2024-09-03 11:18:53 - INFO - Starting cross-validation...
+2024-09-03 11:18:54 - INFO - Use pytorch device_name: cpu
+2024-09-03 11:18:54 - INFO - Load pretrained SentenceTransformer: intfloat/multilingual-e5-large

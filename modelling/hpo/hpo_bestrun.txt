@@ -1,0 +1,1 @@
+BestRun(run_id='11', objective=3.9052886043810604, hyperparameters={'body_learning_rate': 1.0770502781075495e-06, 'num_epochs': 6, 'batch_size': 32, 'max_iter': 279, 'solver': 'lbfgs'}, backend=<optuna.study.study.Study object at 0x7f7bbb289490>)
