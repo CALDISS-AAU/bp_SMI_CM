@@ -214,7 +214,7 @@ Gooey essentially works as arg-parser where one creates Gooey-objects and uses G
 
 The finalised program:
 
-![image](https://hackmd.io/_uploads/Hknind3Gkx.png)
+![image](https://hackmd-prod-images.s3-ap-northeast-1.amazonaws.com/uploads/upload_466d29764983009c234ebc8a9805a9e4.png?AWSAccessKeyId=AKIA3XSAAW6AWSKNINWO&Expires=1740596597&Signature=8MkFSA26Z8qBMqO4ZvZHazn%2Fioo%3D)
 
 A simple yet effective setup for this context that incorporates model, highlighter and saves as output. Huzzah!
 
