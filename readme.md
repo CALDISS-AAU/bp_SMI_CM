@@ -3,32 +3,32 @@
 ## Project description
 This project focuses on developing a few-shot classifier trained on transcribed interviews from a job center in Denmark. The classifier is designed to perform binary classification of reported speech. This repository provides a two-part pipeline that utilizes a trained model to process interview documents and highlight key sentences. The pipeline performs the following tasks:
 
-:::info
-Input Document Handling: Accepts a .docx document as input, containing the interview transcript.
 
-Sentence Segmentation: Breaks down the input document into individual sentences.
+- Input Document Handling: Accepts a .docx document as input, containing the interview transcript.
 
-Sentence-Classification: Applies the trained model to make predictions on each sentence, classifying them based on the provided criteria.
+- Sentence Segmentation: Breaks down the input document into individual sentences.
 
-HTML-Based Highlighting: Highlights the classified sentences using HTML tags for visual representation in the outputfile.:star: 
+- Sentence-Classification: Applies the trained model to make predictions on each sentence, classifying them based on the provided criteria.
 
-Output Generation: Produces a .docx document with highlighted sentences, preserving the original content while adding visual indicators for classified segments.
+- HTML-Based Highlighting: Highlights the classified sentences using HTML tags for visual representation in the outputfile.
 
-A Gooey-program wrapper is made which wraps the the above functions into a .exe program.
+- Output Generation: Produces a .docx document with highlighted sentences, preserving the original content while adding visual indicators for classified segments.
 
-All scripts are written in python:snake:
-:::
+- A Gooey-program wrapper is made which wraps the the above functions into a .exe program.
+
+- All scripts are written in python
+
 
 ### Main Python Packages:
-Transformers: For SetFit framework, tokenizer and overall workflow with Language Modelling.
+Transformers: Transformers workflow, parameters, tokenizer,  🤗-API and overall workflow with Language Modelling.
 PyTorch: For training schedules and GPU-support.
-SetFit: For Building the Few-shot Model.
+SetFit: For SetFit framework and building the Few-shot Model.
 scikit-learn: For K-Fold validation.
 Gooey: For creating simple user interfaces.
 Pysbd: For splitting text into sentences.
 spire.doc: For reading and writing .docx files.
 
-An environment.yml file is included to recreate the setup needed for running all scripts.:package: 
+An environment.yml file is included to recreate the setup needed for running all scripts.
 
 
 
@@ -46,9 +46,9 @@ The modelling part is split into five python scripts which handles necessary par
 ## Few-Shot Learning
 Few-Shot Learning (FSL) is a machine learning method which can be classified from Wang et. al. 2022 as: 
 
-> A computer proram is said to learn from experience E with respect to some classes of task T and performance measure P if its performance can improve with E on T measured by P.
+> A computer program is said to learn from experience E with respect to some classes of task T and performance measure P if its performance can improve with E on T measured by P.
 
-E in FSL is typically very small and in vein of this project also quite small with only 25 texts in total.
+E in FSL is typically very small and in the context of this project also quite small with only 25 texts in total for training data.
 
 The Task at hand here is classifying reported speech in danish interviews with binary labels ("reported speech", "not reported speech")
 Few-shot learning (FSL) is popular for its ability to learn and predict classes and instances with only a few training samples, making it particularly useful in scenarios where data is sparse and traditional language model solutions are not feasible.
@@ -62,7 +62,7 @@ The model is based on a pretrained LLM with a logistic regression as prediction 
 The modelling contains five python scripts:
 
 ### 1: Data preparation:
-The first script in this modelling part is responsible for preparing the dataset used to train the model on reported speech sentences. As mentioned above the sentences are annotated from earlier interviews conducted by the reseacher and then annotated.
+The first script in this modelling part is responsible for preparing the dataset used to train the model on reported speech sentences. The sentences are annotated from earlier interviews conducted by the reseacher and then annotated.
 The script Loads data from a json lines format, splits it into sentences, excludes parts with no sentences and saves as .json file for easier handling as input for training the model.
 The handling of data is done using the function `get_sentences` from the `smi_sm_funs.py` script which uses the `pysbd` package to split text into sentences, stores the labels into the labels list, creates label index pairs and then splits the sentences into negatives and positives (reported-speech/not-reported-speech) labelled at the start 0 and 1.
 
@@ -76,17 +76,16 @@ The data is split into a 70/30 split for training and testing. The 30% for testi
 
 During data preparation, it was ensured that the data set contained an equal number of samples for each label.
 
-The model is build upon the [intfloat/multilingual-e5-large](https://huggingface.co/intfloat/multilingual-e5-large) model from :hugging_face:. The pretrained model was chosen because of its placement on the :hugging_face: model leaderboard for Danish at the time of training.
+The model is build upon the [intfloat/multilingual-e5-large](https://huggingface.co/intfloat/multilingual-e5-large) model. The pretrained model was chosen because of its placement on the 🤗-model leaderboard for Danish at the time of training.
 
 
-:::success
-Exploring other pretrained models for fine-tuning is not only welcomed but also encouraged to potentially enhance the final model's performance.
-:::
+>Exploring other pretrained models for fine-tuning is not only welcomed but also encouraged to potentially enhance the final model's performance.
 
 The script uses the normal training setup from the `SetFit` library and uses the built-in functions for hyperparameter-search.
 15 trials were run with different training parameters.
 
 Best performance was achieved with the following hyperparameters which were used for training the final model.
+
 ```
 BestRun(run_id='11', objective=3.9052886043810604, hyperparameters={'body_learning_rate': 1.0770502781075495e-06, 'num_epochs': 6, 'batch_size': 32, 'max_iter': 279, 'solver': 'lbfgs'}, backend=<optuna.study.study.Study object at 0x7f7bbb289490>)
 ```
@@ -142,10 +141,10 @@ The results from the cross-validation is as follows:
     "f1": 0.9585253456221198
 }]
 ```
-The results suggests the accuracy was not the result of random selection of the train/test split and that the model succesfully learned to classify results. The average fold's accuracy ends up being ==96.88== quite close to the lowest folds accuracy of 95.87% which again suggests that the models training data and hyperparameters resulted in a good performing model.
+The results suggests the accuracy was not the result of random selection of the train/test split and that the model succesfully learned to classify results. The average fold's accuracy ends up being 96.88 quite close to the lowest folds accuracy of 95.87% which again suggests that the models training data and hyperparameters resulted in a good performing model.
 
 ### 4: Model training
-The model is trained based on results from the hyperparameter-search results and results in an accuracy of ==~96%==. This demonstrates strong performance in classifying reported speech, even with the limited texts from the train, test, and evaluation sets. Training was conducted on a High-Performance Computing (HPC) system, utilizing a single NVIDIA H100 192 GB GPU.
+The model is trained based on results from the hyperparameter-search results and results in an accuracy of ~96%. This demonstrates strong performance in classifying reported speech, even with the limited texts from the train, test, and evaluation sets. Training was conducted on a High-Performance Computing (HPC) system, utilizing a single NVIDIA H100 192 GB GPU.
 
 The parameters for the final training schedule is shown below utilizing parameters from HPO:
 
@@ -197,13 +196,14 @@ As performance does not vary noticable, we conclude that maintaining the default
 ### Methodological considerations
 
 The amount of texts used in training was considered heavily in the process. As Few-Shot Learning was used to predict labels, it was needed to access how big the corpus should be in order to get as good a score as possible and to not overfit the training data, as FSL-models has a tendency to do. The choice landed on a random sample of 25 texts which as mentioned was split into train, test and eval sets. The Few-Shot learning methods was ultimately chosen because of the inherently few available texts. A method that could effectively predict the desired labels in sparse data was needed. Experiments were conducted to determine the optimal size of the corpus. A key challenge during data preparation was not only deciding the corpus size but also ensuring an appropriate distribution of texts. This was necessary for the model to learn the distribution of both the texts and their corresponding labels. To ensure the model learned a representative amount of label variations and avoided overfitting on one label over another, a strict balance of labels was maintained in the training data. This balance was achieved manually by the researcher who labelled the training.
-In the litterature in the area of applied Few-Shot Learning, the optimal amount of text is also discussed and its problems such as overfitting, transfer learning, data augmentation and how to account for them. ==A good overview of FSL can be found in Song et. al. 2022.==
+In the litterature in the area of applied Few-Shot Learning, the optimal amount of text is also discussed and its problems such as overfitting, transfer learning, data augmentation and how to account for them. 
+
+>A good overview of FSL can be found in Song et. al. 2022.
 
 
 ## Highlighter
-:::info
-This Part goes into detail of the highlighter functions and the Gooey wrapper.
-:::
+>This Part goes into detail of the highlighter functions and the Gooey wrapper.
+
 The highlighter uses the spire.doc package to read and write the input/output file as .docx and further converting the original document to HTML.
 The highlighter uses functions from the `SMI-funs.py` script. These functions are called by the highlighter inside the `process_text` pipeline.
 
@@ -214,16 +214,16 @@ Gooey essentially works as arg-parser where one creates Gooey-objects and uses G
 
 The finalised program:
 
-![image](https://hackmd-prod-images.s3-ap-northeast-1.amazonaws.com/uploads/upload_466d29764983009c234ebc8a9805a9e4.png?AWSAccessKeyId=AKIA3XSAAW6AWSKNINWO&Expires=1740596597&Signature=8MkFSA26Z8qBMqO4ZvZHazn%2Fioo%3D)
+![image](https://github.com/user-attachments/assets/781b1ef2-6b6f-40ff-9d8c-7bc1167bd45a)
 
 A simple yet effective setup for this context that incorporates model, highlighter and saves as output. Huzzah!
 
-For references and guidance visit the [Gooey](https://github.com/chriskiehl/Gooey) github page
+For references and guidance visit the [Gooey](https://github.com/chriskiehl/Gooey) page
 
 ## PyInstaller
-:::info
-This last part details the PyInstaller process, potential pitfalls and its workings with Gooey and installations of the program.
-:::
+
+>This last part details the PyInstaller process, potential pitfalls and its workings with Gooey and installations of the program.
+
 
 Pysintaller is a python package to 'freeze' your script and turn it into a executable application.
 The program was compiled using PyInstallers .spec file option which contained the wanted options. The .spec file was chosen for reproducability and to quickly compile a new version when correcting the script when bug fixing.
@@ -252,9 +252,9 @@ More binaries are compiled in the .spec file from the spire.doc package which wa
 
 This repository documents the process of building a text classifier for research purposes using a Few-Shot Learning (FSL) model. FSL was selected due to its effectiveness in handling small training data samples.
 
-The final model is pushed to the CALDISS org. page on the [CALDISS-AAU](https://huggingface.co/CALDISS-AAU):hugging_face:-page where it can be downloaded and of course used for reported-speech sentence-classification. 
+The final model is pushed to the CALDISS org. page on the [CALDISS-AAU](https://huggingface.co/CALDISS-AAU) 🤗-page where it can be downloaded and of course used for reported-speech sentence-classification. 
 
-#### Future Directions
+### Future Directions
 
 As Few-Shot Learning, Large Language Models (LLMs), and Natural Language Processing (NLP) continue to evolve, developing more mature frameworks and models for similar projects is highly encouraged.
 
